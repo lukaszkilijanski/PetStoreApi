@@ -1,22 +1,23 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Contracts\PetsServiceInterface;
 use App\DTO\PetStatusFilterDTO;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 use App\Enums\PetStatuses;
 
 class PetsController extends Controller
 {
+    public function __construct(
+        private readonly PetsServiceInterface $petsService
+    ) {}
+
     public function index(Request $request)
     {
         $petStatusFilterDTO = new PetStatusFilterDTO($request);
-
-        $response = Http::get('https://petstore.swagger.io/v2/pet/findByStatus', [
-            'status' => $petStatusFilterDTO->petStatus
-        ]);
-        $pets = $response->json();
+        $pets = $this->petsService->getPetsListByStatusName($petStatusFilterDTO->petStatus);
         return view('pets-index', [
             'selectedStatus' => $petStatusFilterDTO->petStatus,
             'petStatuses' => PetStatuses::cases(),
