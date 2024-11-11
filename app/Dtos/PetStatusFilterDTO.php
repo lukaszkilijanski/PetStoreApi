@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\DTO;
+namespace App\Dtos;
 
 use App\Enums\PetStatuses;
 use Illuminate\Http\Request;
