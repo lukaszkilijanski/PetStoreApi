@@ -22,8 +22,10 @@ class CreateOrUpdatePetDTO
         array $dataArray
     )
     {
+//        dd(isset($dataArray['name']));
+
         $this->petId = $dataArray['id'];
-        $this->name = $dataArray['name'];
+        $this->name = $dataArray['name'] ?? '';
         $this->category = $dataArray['category'];
         $this->tags = $dataArray['tags'];
         $this->status = $dataArray['status'];
