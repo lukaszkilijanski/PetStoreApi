@@ -1,6 +1,12 @@
 <?php
 declare(strict_types=1);
 
+/**
+ * File: PetServiceProvider.php
+ *
+ * @author Łukasz Kilijański <kilijanski.lukasz@gmail.com>
+ */
+
 namespace App\Providers;
 
 use App\Contracts\PetsServiceInterface;

@@ -1,16 +1,22 @@
 <?php
 declare(strict_types=1);
 
+/**
+ * File: CreateOrUpdatePetDTO.php
+ *
+ * @author Łukasz Kilijański <kilijanski.lukasz@gmail.com>
+ */
+
 namespace App\Dtos;
 
 class CreateOrUpdatePetDTO
 {
-    public int $petId;
-    public string $name;
-    public array $category;
-    public array $tags;
-    public string $status;
-    public array $photoUrls;
+    public ?int $petId;
+    public ?string $name;
+    public ?array $category;
+    public ?array $tags;
+    public ?string $status;
+    public ?array $photoUrls;
 
     public function __construct(
         array $dataArray

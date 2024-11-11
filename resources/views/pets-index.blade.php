@@ -1,7 +1,24 @@
 @extends('main')
 
 @section('content')
-    <form action="{{ route('pets', ['status' => $selectedStatus]) }}" method="GET" class="mb-4">
+    <div class="mb-4 mt-4">
+        <form action="{{ route('pet.find') }}" method="GET">
+            <div class="flex items-center space-x-2">
+                <input type="text" id="search" name="id"
+                       class="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                       placeholder="Find by ID">
+                <button type="submit"
+                        class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    Find
+                </button>
+            </div>
+        </form>
+    </div>
+    <a href="{{ route('pet.create') }}"
+       class="inline-block bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 rounded-lg shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-green-300 transition-all duration-200">
+        Create New Pet
+    </a>
+    <form action="{{ route('pets', ['status' => $selectedStatus]) }}" method="GET" class="mb-4 mt-4">
         <div class="flex items-center space-x-4">
             <label for="status" class="font-medium text-gray-700">Filter by Status:</label>
             <select id="status" name="status"
@@ -29,6 +46,7 @@
             <th class="px-4 py-2 text-left">Tags</th>
             <th class="px-4 py-2 text-left">Status</th>
             <th class="px-4 py-2 text-left">Edit</th>
+            <th class="px-4 py-2 text-left">Remove</th>
         </tr>
         </thead>
         <tbody>
@@ -69,8 +87,19 @@
                 </td>
                 <td class="px-4 py-2">{{$pet['status']}}</td>
                 <td class="px-4 py-2">
-                    <a href="{{ route('pets.edit', ['petId' => $pet['id']]) }}"
+                    <a href="{{ route('pet.edit', ['petId' => $pet['id']]) }}"
                        class="text-indigo-600 hover:text-indigo-800">Edit</a>
+                </td>
+                <td class="px-4 py-2">
+                    <form action="{{ route('pet.remove', ['petId' => $pet['id']]) }}" method="POST"
+                          style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+
+                        <button type="submit" class="text-red-600 hover:text-red-800">
+                            Remove
+                        </button>
+                    </form>
                 </td>
             </tr>
         @endforeach

@@ -1,6 +1,12 @@
 <?php
 declare(strict_types=1);
 
+/**
+ * File: PetStatusFilterDTO.php
+ *
+ * @author Łukasz Kilijański <kilijanski.lukasz@gmail.com>
+ */
+
 namespace App\Dtos;
 
 use App\Enums\PetStatuses;

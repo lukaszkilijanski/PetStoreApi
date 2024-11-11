@@ -7,7 +7,6 @@ declare(strict_types=1);
  * @author Łukasz Kilijański <kilijanski.lukasz@gmail.com>
  */
 
-
 namespace App\Factories;
 
 use App\Dtos\CreateOrUpdatePetDTO;

@@ -1,6 +1,12 @@
 <?php
 declare(strict_types=1);
 
+/**
+ * File: PetsService.php
+ *
+ * @author Łukasz Kilijański <kilijanski.lukasz@gmail.com>
+ */
+
 namespace App\Services;
 
 use App\Contracts\PetsServiceInterface;
@@ -24,12 +30,18 @@ class PetsService implements PetsServiceInterface
         return $response->json();
     }
 
-    public function getPetById(int $petId): Pet
+    public function getPetById(int $petId): ?Pet
     {
         $response = Http::get(
-            $this->getIndicatedUrl(self::PET_BY_ID).$petId
+            $this->getIndicatedUrl(self::PET_BY_ID) . $petId
         );
-        return $this->petFactory->create( new CreateOrUpdatePetDTO($response->json()));
+        try {
+            $pet = $this->petFactory->create(new CreateOrUpdatePetDTO($response->json()));
+        } catch (\Exception $exception) {
+            return null;
+        }
+
+        return $pet;
     }
 
     private function getIndicatedUrl(string $apiPath): string
@@ -55,5 +67,14 @@ class PetsService implements PetsServiceInterface
 
         $response = Http::post($this->getIndicatedUrl(self::POST_UPDATE_PET), $data);
         return $response->successful();
+    }
+
+    public function removePet(int $petId): int
+    {
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+        ])->delete($this->getIndicatedUrl(self::DELETE_PET) . $petId);
+
+        return $response->status();
     }
 }
